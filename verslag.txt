@@ -1,0 +1,80 @@
++------------+
+|Debian 9.2.1|
++------------+
+download link: https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.2.1-amd64-netinst.iso
+Waarom:	- Veel gebruikt
+	- Ubuntu is van Debian
+	- Debian is licht maar krachtig
+	- Veel opties om uit te bereiden
+
+Handige commando's
+Root login:		su -l
+Show ip adressen: 	ip addr show
+	
++------+
+|Docker|
++------+
+Bron:		https://docs.docker.com/engine/installation/linux/docker-ce/debian/#extra-steps-for-wheezy-77
+
+
++-------------------------------------------------------------+
+|Algemene stappen te doen voor dockerfile -> running container|
++-------------------------------------------------------------+
+1) Maak een pre-build map	mkdir pre-build_shippingchallange
+2) Maak een Dockfile bestand	nano Dockerfile
+3) C&p dockfile code		[zie link dockerfile]
+4) Bouw de img			docker build -t shippingchallange .
+5) Run img			[zie run command]
+
+Extra:
+Start running img command: 	docker container start [id/name]
+Stop running img command: 	docker container stop [id/name]
+
+
+
++----------------------+
+|Nimmis (appache + php)|
++----------------------+
+Build command: 	docker run -d --name test-appache2 -p 8080:80 --link test-mysql:docker -v /home/nimmis/html:/var/www/html nimmis/apache-php5
+Bron:		https://hub.docker.com/r/nimmis/apache-php5/
+URL:		http://192.168.56.5:8080
+
+
++-------------+
+|Mysql (MySQL)|
++-------------+
+Build command:	docker run --detach --name=test-mysql --env="MYSQL_ROOT_PASSWORD=mypassword" --publish 6603:3306 mysql
+Bron:		https://severalnines.com/blog/mysql-docker-containers-understanding-basics
+URL:		http://192.168.56.5:6603
+
+Login command:	mysql -uroot -pmypassword -h 172.17.0.4 -P 3306
+
+
++---------------------+
+|Docker Managment Tool|
++---------------------+
+Build command: 	docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v /opt/portainer:/data portainer/portainer
+Bron:		https://portainer.io/install.html
+URL:		http://192.168.56.5:9000
+
+
++----------+
+|Phpmyadmin|
++----------+
+Build command:	docker run --link test-mysql:mysql -p 1234:80 nazarpc/phpmyadmin
+Bron:		https://hub.docker.com/r/nazarpc/phpmyadmin/
+URL:		http://192.168.56.5:1234
+
+username:	root
+password:	mypassword
+
++-------------+
+|Proftpd (FTP)|
++-------------+
+Install command:apt-get install proftpd
+Bron:		https://debian-administration.org/article/228/Setting_up_an_FTP_server_on_Debian
+Filepermissie:	chown -R <debian login> /home/nimmis/html/
+
+host:		http://192.168.56.5:21 (bij FileZilla hoeft port nummer niet ingeven)
+username:	<debian login>
+password:	<debian password>
